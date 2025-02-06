@@ -5,9 +5,9 @@ db = DuckDB::Database.open
 con = db.connect
 
 # SET FILE NAMES
-mid_campaign_filename = '2024-03_Cromon Ltd_2335678080_SpotifyDM_EndOfCampaign_PerformanceReport.csv' # Add The filename for your Mid-period campaign stats
-eligible_music_filename = '2024-04-16_Cromon Ltd_2335678080_spotify_discovery_mode_eligible.csv' # Add The filename for your Proposed eligible music
-minimum_percentage_streams_list = 50 # Set the minimum uplift you want to allow to opt in
+mid_campaign_filename = '' # Add The filename for your Mid-period campaign stats
+eligible_music_filename = '' # Add The filename for your Proposed eligible music
+minimum_percentage_streams_lift = 50 # Set the minimum uplift you want to allow to opt in
 
 # Create tables
 con.query("CREATE TABLE mid_campaign AS SELECT * FROM '#{mid_campaign_filename.to_s}'")
@@ -17,7 +17,7 @@ con.query("CREATE TABLE eligible AS SELECT * FROM '#{eligible_music_filename.to_
 camp_result = con.query('SELECT isrc_code, "DM contexts % lift" FROM mid_campaign')
 
 # get a list of ISRCs that should not be opted in for the next term
-isrcs_for_removal = camp_result.to_a.select{|row| row[1].gsub(",","").gsub("%","").to_i < minimum_percentage_streams_list}.map{|row| row[0]}
+isrcs_for_removal = camp_result.to_a.select{|row| row[1].to_s.gsub(",","").gsub("%","").to_i < minimum_percentage_streams_lift}.map{|row| row[0]}
 in_clause = isrcs_for_removal.map{|isrc| "'#{isrc}'"}.join(', ')
 
 # duplicate eligible table
