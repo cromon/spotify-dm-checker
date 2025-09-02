@@ -5,8 +5,8 @@ db = DuckDB::Database.open
 con = db.connect
 
 # SET FILE NAMES
-mid_campaign_filename = '' # Add The filename for your Mid-period campaign stats
-eligible_music_filename = '' # Add The filename for your Proposed eligible music
+mid_campaign_filename = '2025-05_Cromon Ltd_2335678080_SpotifyDM__MidCampaign_PerformanceReport.csv' # Add The filename for your Mid-period campaign stats
+eligible_music_filename = '2025-05-15_Cromon Ltd_2335678080_spotify_discovery_mode_eligible.csv' # Add The filename for your Proposed eligible music
 minimum_percentage_streams_lift = 50 # Set the minimum uplift you want to allow to opt in
 
 # Create tables
